@@ -481,6 +481,21 @@ describe Admin::ContentController do
     it_should_behave_like 'destroy action'
     it_should_behave_like 'autosave action'
 
+    describe 'merge action' do
+      before do
+        @article_to_merge = mock("article_to_merge")
+      end
+
+      it 'should merge articles' do
+        get :merge, 'id' => @article.id, 'merge_with' => @article_to_merge
+        response.should render_template('new')
+        assigns(:article).should_not be_nil
+        assigns(:article).should be_valid
+        response.should contain(/body/)
+        response.should contain(/extended content/)
+      end
+    end
+
     describe 'edit action' do
 
       it 'should edit article' do

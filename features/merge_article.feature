@@ -19,3 +19,5 @@ Feature: Merge Articles
   And I press "Merge"
   Then the article "Foobar" should have body "LoremIpsum LoremIpsum 2"
   And show me the page
+#And the article "Foobar"should have the author
+
