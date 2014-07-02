@@ -481,17 +481,26 @@ describe Admin::ContentController do
     it_should_behave_like 'destroy action'
     it_should_behave_like 'autosave action'
 
-#    describe 'merge action' do
-#      it 'should merge articles' do
-#        get :merge, 'id' => @article.id, 'merge_with' => @article.id
-#        response.should render_template('new')
-#        assigns(:article).should_not be_nil
-#        assigns(:article).should be_valid
-#        response.should contain(/body/)
-#        response.should contain(/extended content/)
-#      end
-#    end
-#
+    describe 'merge action' do
+      before do
+        @article_to_merge = Factory(:article, :body => 'here is some content to merge')
+        @article_to_merge.id = 2
+        @article_to_merge.extended = 'more and more to merge'
+      end
+      it 'should merge articles' do
+        get :merge, 'id' => @article.id, 'merge_with' => @article_to_merge.id
+#response.should render_template('index')
+        response.should render_template('new')
+        assigns(:article).should_not be_nil
+        assigns(:article).should be_valid
+        response.should contain(/body/)
+        response.should contain(/extended content/)
+        response.should contain(/here is some content to merge/)
+#response.should contain(/more and more to merge/)
+#file.open('tmp/test.html','w') {|file| file.write(response.body)} `firefox '/tmp/test.html'`
+      end
+    end
+
     describe 'edit action' do
 
       it 'should edit article' do

@@ -15,8 +15,8 @@ Feature: Merge Articles
   Scenario: Successfully merge articles
   Given I am on the article page for "Foobar"
   And I fill in "merge_with" with "3"
-  And show me the page
   And I press "Merge"
+  And show me the page
   Then the article "Foobar" should have body "LoremIpsum LoremIpsum 2"
   And show me the page
 #And the article "Foobar"should have the author
