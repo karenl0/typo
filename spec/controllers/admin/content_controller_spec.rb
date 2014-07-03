@@ -487,7 +487,7 @@ describe Admin::ContentController do
         @article_to_merge.id = 2
       end
       it 'should merge articles' do
-        get :merge, 'id' => @article.id, 'merge_with' => @article_to_merge.id
+        post :merge, 'id' => @article.id, 'merge_with' => @article_to_merge.id
         response.should render_template("index")
         assigns(:article).should_not be_nil
         assigns(:article).should be_valid

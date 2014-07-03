@@ -423,7 +423,11 @@ class Article < Content
 #    puts("++++++++++++++ article.extended = #{self.extended}")
 #    puts("++++++++++++++ article_to_merge.extended = #{article_to_merge.extended}")
     self.body = self.body + article_to_merge.body
-#self.extended = self.extended + article_to_merge.extended
+    if self.extended == nil
+      self.extended = article_to_merge.extended
+    else
+      self.extended = self.extended + article_to_merge.extended
+    end
     self.save
   end
 
