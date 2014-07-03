@@ -12,36 +12,36 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def index
-#puts ("++++++++++++ in index method")
     @search = params[:search] ? params[:search] : {}
     
     @articles = Article.search_with_pagination(@search, {:page => params[:page], :per_page => this_blog.admin_display_elements})
 
     if request.xhr?
-      puts ("++++++++++++ in index method in request.xhr")
       render :partial => 'article_list', :locals => { :articles => @articles }
     else
-      puts ("++++++++++++ in index method in else clause of request.xhr")
       @article = Article.new(params[:article])
     end
   end
 
   def new
-#puts ("++++++++++++ in new method")
     new_or_edit
   end
 
   def merge
-    puts ("++++++++++++ in merge method")
+    puts("++++++++++++++ in merge method")
+    puts("++++++++++++++ params[:id] = #{params[:id]}")
     @article = Article.find(params[:id])
+    puts("article.body = #{@article.body}")
     unless @article.access_by? current_user
       redirect_to :action => 'index'
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
     @article.merge_with(params[:merge_with])
-#redirect_to :action => 'index'
-    new_or_edit
+    puts("++++++++++++++ merged article.body = #{@article.body}")
+    debugger
+    redirect_to :action => 'index'
+#new_or_edit
   end
 
   def edit
@@ -157,7 +157,6 @@ class Admin::ContentController < Admin::BaseController
   def real_action_for(action); { 'add' => :<<, 'remove' => :delete}[action]; end
 
   def new_or_edit
-#puts ("++++++++++++ in new_or_edit method")
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
