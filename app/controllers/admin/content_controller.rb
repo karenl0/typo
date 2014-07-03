@@ -38,7 +38,7 @@ class Admin::ContentController < Admin::BaseController
       return
     end
 #unless params[:merge_with] == params[:id] || Article.find(params[:merge_with] == nil)
-    unless params[:merge_with] == params[:id] 
+    unless params[:merge_with] == params[:id] || !current_user.admin?
       @article.merge_with(params[:merge_with])
     end
 #    puts("++++++++++++++ merged article.body = #{@article.body}")
