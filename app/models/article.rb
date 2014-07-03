@@ -418,17 +418,23 @@ class Article < Content
 
   def merge_with(merge_with)
     article_to_merge = Article.find(merge_with)
-    puts("++++++++++++++ article.body = #{self.body}")
-    puts("++++++++++++++ article_to_merge.body = #{article_to_merge.body}")
+#puts("++++++++++++++ article.body = #{self.body}")
+#    puts("++++++++++++++ article_to_merge.body = #{article_to_merge.body}")
 #    puts("++++++++++++++ article.extended = #{self.extended}")
 #    puts("++++++++++++++ article_to_merge.extended = #{article_to_merge.extended}")
-    self.body = self.body + article_to_merge.body
+    self.body = self.body + " " + article_to_merge.body
     if self.extended == nil
       self.extended = article_to_merge.extended
     else
-      self.extended = self.extended + article_to_merge.extended
+      self.extended = self.extended + " " + article_to_merge.extended
+    end
+    if self.excerpt == nil
+      self.excerpt = article_to_merge.excerpt
+    else
+      self.excerpt = self.excerpt + " " + article_to_merge.excerpt
     end
     self.save
+    article_to_merge.destroy
   end
 
   protected

@@ -28,18 +28,18 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def merge
-    puts("++++++++++++++ in merge method")
-    puts("++++++++++++++ params[:id] = #{params[:id]}")
+#    puts("++++++++++++++ in merge method")
+#    puts("++++++++++++++ params[:id] = #{params[:id]}")
     @article = Article.find(params[:id])
-    puts("article.body = #{@article.body}")
+#    puts("article.body = #{@article.body}")
     unless @article.access_by? current_user
       redirect_to :action => 'index'
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
-    @article.merge_with(params[:merge_with])
-    puts("++++++++++++++ merged article.body = #{@article.body}")
     debugger
+    @article.merge_with(params[:merge_with])
+#    puts("++++++++++++++ merged article.body = #{@article.body}")
     redirect_to :action => 'index'
 #new_or_edit
   end
