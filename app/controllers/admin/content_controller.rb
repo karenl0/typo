@@ -37,8 +37,10 @@ class Admin::ContentController < Admin::BaseController
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
-    debugger
-    @article.merge_with(params[:merge_with])
+#unless params[:merge_with] == params[:id] || Article.find(params[:merge_with] == nil)
+    unless params[:merge_with] == params[:id] 
+      @article.merge_with(params[:merge_with])
+    end
 #    puts("++++++++++++++ merged article.body = #{@article.body}")
     redirect_to :action => 'index'
 #new_or_edit

@@ -433,6 +433,11 @@ class Article < Content
     else
       self.excerpt = self.excerpt + " " + article_to_merge.excerpt
     end
+    article_to_merge.comments.each do |comment|
+      comment.article = self
+      comment.save
+    end
+    article_to_merge.reload
     self.save
     article_to_merge.destroy
   end
