@@ -419,7 +419,9 @@ class Article < Content
   def merge_with(merge_with)
     article_to_merge = Article.find(merge_with)
     self.body = self.body + article_to_merge.body
+    self.extended = self.extended + article_to_merge.extended
     self.save
+    article_to_merge.destroy
   end
 
   protected
